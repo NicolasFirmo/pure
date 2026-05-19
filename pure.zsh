@@ -226,7 +226,9 @@ prompt_pure_preprompt_render() {
 	)
 	local prompt_fingerprint="${(pj:|:)${(@qqq)prompt_fingerprint_parts}}"
 
-	if [[ $1 == precmd ]]; then
+	local last_cmd=$(fc -ln -1 | xargs)
+
+	if [[ $1 == precmd && $last_cmd != "clear" && $prompt_pure_last_prompt != "" ]]; then
 		# Initial newline, for spaciousness.
 		print
 	elif [[ $prompt_pure_last_prompt != $prompt_fingerprint ]]; then
